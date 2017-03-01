@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+
+  k5.pires.dev: 
+    image: daocloud.io/billqiang/wesee-php-nginx:master-80616e8
+    container_name: k5.pires.dev
+    ports:
+      - "80:80"
+      - "9000:9000"
+    volumes:
+      - ../:/var/www/html
+      - ./default.conf:/etc/nginx/sites-enabled/default.conf
+    links:
+      - k5.mysql.dev
+
+  k5.mysql.dev:
+    image: hub.c.163.com/library/mysql
+    container_name: k5.mysql.dev
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../:/var/www/html
+      #- ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret

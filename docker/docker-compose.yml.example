@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+
+  APP_URL: 
+    image: daocloud.io/billqiang/wesee-php-nginx:master-80616e8
+    container_name: APP_URL
+    ports:
+      - "80:80"
+      - "9000:9000"
+    volumes:
+      - ../:/var/www/html
+      - ./default.conf:/etc/nginx/sites-enabled/default.conf
+    links:
+      - DB_HOST
+
+  DB_HOST:
+    image: hub.c.163.com/library/mysql
+    container_name: DB_HOST
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../:/var/www/html
+      #- ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: DB_PASSWORD
